@@ -8,10 +8,15 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
@@ -51,6 +56,12 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
     </repositories> 
     <pluginRepositories>
         <pluginRepository>
@@ -67,16 +78,50 @@
         </pluginRepository>
     </pluginRepositories>
     <build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+                  <plugin> 
+        <groupId>org.apache.maven.plugins</groupId>  
+        <artifactId>maven-war-plugin</artifactId>  
+        <version>2.3</version>  
+        <configuration> 
+          <failOnMissingWebXml>false</failOnMissingWebXml>  
+          <warName>${project.build.finalName}</warName> 
+        </configuration> 
+      </plugin>  
+      <plugin> 
+        <groupId>org.apache.maven.plugins</groupId>  
+        <artifactId>maven-dependency-plugin</artifactId>  
+        <version>2.6</version>  
+        <executions> 
+          <execution> 
+            <phase>validate</phase>  
+            <goals> 
+              <goal>copy</goal> 
+            </goals>  
+            <configuration> 
+              <outputDirectory>${endorsed.dir}</outputDirectory>  
+              <silent>true</silent>  
+              <artifactItems> 
+                <artifactItem> 
+                  <groupId>javax</groupId>  
+                  <artifactId>javaee-endorsed-api</artifactId>  
+                  <version>7.0</version>  
+                  <type>jar</type> 
+                </artifactItem> 
+              </artifactItems> 
+            </configuration> 
+          </execution> 
+        </executions> 
+      </plugin>  
+        </plugins>
+    </build>
 </project>
